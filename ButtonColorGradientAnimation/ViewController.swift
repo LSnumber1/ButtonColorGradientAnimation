@@ -11,10 +11,10 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var colorButton: UIButton!
-    var progress: CGFloat = 0.0
-    var caGradientLayer: CAGradientLayer?
-    var firstColors:[Any]?
-    var endColors:[Any]?
+    var progress: CGFloat = 0.0 //用于控制显示动画次数哦
+    var caGradientLayer: CAGradientLayer? //渐变色实现
+    var firstColors:[Any]?  //动画处使用，动画开始颜色组
+    var endColors:[Any]? //动画处使用，动画结束颜色组
     override func viewDidLoad() {
         super.viewDidLoad()
         colorButton.layer.cornerRadius = 10
@@ -34,6 +34,7 @@ extension ViewController: CAAnimationDelegate {
 }
 //MARK: - UI
 extension ViewController {
+    ///初始化CAGradientLayer
     func initGradientLayerView() {
         caGradientLayer = CAGradientLayer()
         caGradientLayer?.frame = CGRect(x: 0, y: 0, width: 200, height: 50)
@@ -48,11 +49,15 @@ extension ViewController {
         ]
         caGradientLayer?.colors = colors
         firstColors = colors
+        //Button上添加Layer
         colorButton.layer.addSublayer(caGradientLayer!)
-        
+        //开始动画
         self.gradientAnimation()
     }
-    
+}
+//MARK: - 动画
+extension ViewController {
+    ///Layer动画
     @objc func gradientAnimation() {
         var colorArray = caGradientLayer?.colors
         
