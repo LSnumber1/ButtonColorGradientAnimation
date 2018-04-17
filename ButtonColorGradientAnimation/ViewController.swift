@@ -12,49 +12,49 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var colorButton: UIButton!
     var progress: CGFloat = 0.0
-    var progressGradientLayer: CAGradientLayer?
+    var caGradientLayer: CAGradientLayer?
     var firstColors:[Any]?
     var endColors:[Any]?
     override func viewDidLoad() {
         super.viewDidLoad()
         colorButton.layer.cornerRadius = 10
-        setupProgressView()
+        initGradientLayerView()
     }
 }
 //MARK: - CAAnimationDelegate
 extension ViewController: CAAnimationDelegate {
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         
-//        if progress < 1 {
-            progressGradientLayer?.colors = endColors
-            progressGradient()
-//        }
+        if progress < 10 {
+            caGradientLayer?.colors = endColors
+            gradientAnimation()
+        }
         progress += 1.0
     }
 }
-//MARK: - CAAnimationDelegate
+//MARK: - UI
 extension ViewController {
-    func setupProgressView() {
-        progressGradientLayer = CAGradientLayer()
-        progressGradientLayer?.frame = CGRect(x: 0, y: 0, width: 200, height: 50)
-        progressGradientLayer?.cornerRadius = 10
-        progressGradientLayer?.startPoint = CGPoint(x: 0.0, y: 0)
-        progressGradientLayer?.endPoint = CGPoint(x: 1.0, y: 0)
+    func initGradientLayerView() {
+        caGradientLayer = CAGradientLayer()
+        caGradientLayer?.frame = CGRect(x: 0, y: 0, width: 200, height: 50)
+        caGradientLayer?.cornerRadius = 10
+        caGradientLayer?.startPoint = CGPoint(x: 0.0, y: 0)
+        caGradientLayer?.endPoint = CGPoint(x: 1.0, y: 0)
         let colors = [
             UIColor.brown.cgColor,
             UIColor.red.cgColor,
             UIColor.orange.cgColor,
             UIColor.cyan.cgColor
         ]
-        progressGradientLayer?.colors = colors
+        caGradientLayer?.colors = colors
         firstColors = colors
-        colorButton.layer.addSublayer(progressGradientLayer!)
+        colorButton.layer.addSublayer(caGradientLayer!)
         
-        self.progressGradient()
+        self.gradientAnimation()
     }
     
-    @objc func progressGradient() {
-        var colorArray = progressGradientLayer?.colors
+    @objc func gradientAnimation() {
+        var colorArray = caGradientLayer?.colors
         
         if endColors != nil {
             firstColors = endColors
@@ -73,6 +73,6 @@ extension ViewController {
         animation.fillMode = kCAFillModeForwards
         animation.isRemovedOnCompletion = false
         animation.delegate = self
-        progressGradientLayer?.add(animation, forKey: "animateGradient")
+        caGradientLayer?.add(animation, forKey: "animateGradient")
     }
 }
